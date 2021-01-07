@@ -8,11 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -358,7 +354,7 @@ public final class Game {
             legalNumberOfApples = DEFAULT_APPLE_QUANTITY;
             legalNumberOfMines = DEFAULT_MINE_QUANTITY;
             tailBites = DEFAULT_TAIL_BITE_QUANTITY;
-            level = 0;
+            level = 6;
             score = DEFAULT_SCORE;
         }
 
@@ -487,22 +483,21 @@ public final class Game {
          * A method to populate the snake, apples, and mines Lists if needed.
          * Apples and mines are updated at the end of each level, when the apples
          * List is empty. Apples and mines are not allowed to be placed atop
-         * already-present apples.
+         * already-present apples and mines.
          */
         private void populatePixelElements(){
             if(snake.isEmpty()) snake = List.of(new Segment(currentLocation));
             if(apples.isEmpty()){
-                Map<Point, Apple> ApplesMap = new HashMap<>();
+                Set<Apple> applesSet = new HashSet<>();
                 tailBites = DEFAULT_TAIL_BITE_QUANTITY;
                 level++;
                 final List<Apple> replacementApples = new ArrayList<>();
                 for(int i = 0; i < legalNumberOfApples; i++) {
                     Apple a = new Apple(level);
-                    Apple ax;
-                    if((ax = ApplesMap.get(a.getPoint())) != null) {
-                        do a = new Apple(level); while (a.equals(ax));
+                    while (applesSet.contains(a)) {
+                        a = new Apple(level);
                     }
-                    ApplesMap.put(a.getPoint(), a);
+                    applesSet.add(a);
                     replacementApples.add(a);
                 }
                 apples = Collections.unmodifiableList(replacementApples);
@@ -511,10 +506,10 @@ public final class Game {
                     final List<Mine> replacementMines = new ArrayList<>();
                     for(int i = 0; i < legalNumberOfMines; i++) {
                         Mine m = new Mine(level);
-                        Apple ax;
-                        if ((ax = ApplesMap.get(m.getPoint())) != null) {
-                            do m = new Mine(level); while (m.equals(ax));
+                        while (applesSet.contains(m)) {
+                            m = new Mine(level);
                         }
+                        applesSet.add(m);
                         replacementMines.add(m);
                     }
                     mines = Collections.unmodifiableList(replacementMines);

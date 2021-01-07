@@ -26,7 +26,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../algo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -68,21 +68,21 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609971840855" />
-    <state width="1877" height="129" key="GridCell.Tab.0.bottom" timestamp="1609971842482">
+    <state width="1877" height="129" key="GridCell.Tab.0.bottom" timestamp="1609992363862">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1609971842482" />
-    <state width="1877" height="129" key="GridCell.Tab.0.center" timestamp="1609971842482">
+    <state width="1877" height="129" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1609992363862" />
+    <state width="1877" height="129" key="GridCell.Tab.0.center" timestamp="1609992363861">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1609971842482" />
-    <state width="1877" height="129" key="GridCell.Tab.0.left" timestamp="1609971842482">
+    <state width="1877" height="129" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1609992363861" />
+    <state width="1877" height="129" key="GridCell.Tab.0.left" timestamp="1609992363861">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1609971842482" />
-    <state width="1877" height="129" key="GridCell.Tab.0.right" timestamp="1609971842482">
+    <state width="1877" height="129" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1609992363861" />
+    <state width="1877" height="129" key="GridCell.Tab.0.right" timestamp="1609992363862">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="129" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1609971842482" />
+    <state width="1877" height="129" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1609992363862" />
   </component>
 </project>
