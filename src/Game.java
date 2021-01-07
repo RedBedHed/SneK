@@ -303,18 +303,7 @@ public final class Game {
          * A {@code List} of all current {@code Mine}s on the grid.
          */
         private List<Mine> mines;
-
-        /**
-         * The game thread.
-         */
-        private Thread gameThread;
-
-        /**
-         * Represents the number of times the update method has been called.
-         * This number is reset to zero each time the GUI is changed.
-         */
-        private int updateCount;
-
+        
         /**
          * A public constructor for a {@code GridPanel}.
          */
@@ -371,7 +360,7 @@ public final class Game {
         /**
          * Resets the {@code GridPanel}'s fields to their default values.
          */
-        public final void reset(){
+        public final synchronized void reset(){
             init();
         }
 
@@ -454,7 +443,7 @@ public final class Game {
         /*
          * A method to house immediate game logic and to update the GUI when needed.
          */
-        private void update(){
+        private synchronized void update(){
             populatePixelElements();
             if(snake.size() > 2) {
                 final Segment head = snake.get(snake.size() - 1);
@@ -485,7 +474,7 @@ public final class Game {
                     Game.INSTANCE.getScorePanel().update(level, score, --tailBites);
                 }
             }
-            SwingUtilities.invokeLater(new Runnable(){
+            SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     validate();
