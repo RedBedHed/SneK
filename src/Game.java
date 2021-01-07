@@ -485,8 +485,13 @@ public final class Game {
                     Game.INSTANCE.getScorePanel().update(level, score, --tailBites);
                 }
             }
-            validate();
-            repaint();
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run() {
+                    validate();
+                    repaint();
+                }
+            });
         }
 
         /*
