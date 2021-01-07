@@ -120,8 +120,13 @@ public final class Game {
      */
     public final void reset(){
         gamePanel.reset();
-        gameFrame.revalidate();
-        gameFrame.repaint();
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+                gameFrame.revalidate();
+                gameFrame.repaint();
+            }
+        });
     }
 
     /**
@@ -150,8 +155,13 @@ public final class Game {
                                  final int tailBites){
             removeAll();
             add(updateLabel(level, score, tailBites));
-            validate();
-            repaint();
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run() {
+                    validate();
+                    repaint();
+                }
+            });
         }
 
         /**
@@ -354,7 +364,7 @@ public final class Game {
             legalNumberOfApples = DEFAULT_APPLE_QUANTITY;
             legalNumberOfMines = DEFAULT_MINE_QUANTITY;
             tailBites = DEFAULT_TAIL_BITE_QUANTITY;
-            level = 6;
+            level = 0;
             score = DEFAULT_SCORE;
         }
 
