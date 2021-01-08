@@ -303,7 +303,7 @@ public final class Game {
          * A {@code List} of all current {@code Mine}s on the grid.
          */
         private List<Mine> mines;
-        
+
         /**
          * A public constructor for a {@code GridPanel}.
          */
