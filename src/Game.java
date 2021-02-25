@@ -74,7 +74,7 @@ public final class Game {
         gameFrame.setBackground(Color.WHITE);
         gameFrame.setSize(GAME_FRAME_SIZE);
         gameFrame.setLayout(new BorderLayout());
-        gamePanel = new GridPanel();
+        gamePanel = GridPanel.INSTANCE;
         scorePanel = new ScorePanel();
         gameFrame.add(scorePanel, BorderLayout.NORTH);
         gameFrame.add(gamePanel, BorderLayout.CENTER);
@@ -214,6 +214,7 @@ public final class Game {
         public static final int HORIZONTAL_BOUND;
         public static final int VERTICAL_BOUND;
         public static final Random rgen;
+        public static final GridPanel INSTANCE;
 
         /* init */
         static {
@@ -237,6 +238,75 @@ public final class Game {
             VERTICAL_BOUND = 528;
             MINE_COLOR = new Color(200,0,100);
             rgen = new Random();
+            INSTANCE = new GridPanel();
+        }
+
+        private enum KeyAction {
+            MOVE_RIGHT {
+                @Override
+                public void perform() {
+                    if(!INSTANCE.currentDirection.isLeft()) {
+                        INSTANCE.currentDirection = Direction.RIGHT;
+                    }
+                }
+            },
+            MOVE_LEFT {
+                @Override
+                public void perform() {
+                    if(!INSTANCE.currentDirection.isRight()) {
+                        INSTANCE.currentDirection = Direction.LEFT;
+                    }
+                }
+            },
+            MOVE_UP {
+                @Override
+                public void perform() {
+                    if(!INSTANCE.currentDirection.isDown()) {
+                        INSTANCE.currentDirection = Direction.UP;
+                    }
+                }
+            },
+            MOVE_DOWN {
+                @Override
+                public void perform() {
+                    if(!INSTANCE.currentDirection.isUp()) {
+                        INSTANCE.currentDirection = Direction.DOWN;
+                    }
+                }
+            },
+            PAUSE {
+                @Override
+                public void perform() {
+                    INSTANCE.gameStatus = INSTANCE.gameStatus.pause();
+                }
+            },
+            NULL { @Override public void perform() { } };
+
+            public abstract void perform();
+
+            private static final ChainedMap<Integer, KeyAction> KEY_ACTIONS;
+            static {
+                KEY_ACTIONS = new ChainedMap<Integer, KeyAction>()
+                        .place(KeyEvent.VK_RIGHT, MOVE_RIGHT)
+                        .place(KeyEvent.VK_D, MOVE_RIGHT)
+                        .place(KeyEvent.VK_LEFT, MOVE_LEFT)
+                        .place(KeyEvent.VK_A, MOVE_LEFT)
+                        .place(KeyEvent.VK_UP, MOVE_UP)
+                        .place(KeyEvent.VK_W, MOVE_UP)
+                        .place(KeyEvent.VK_DOWN, MOVE_DOWN)
+                        .place(KeyEvent.VK_S, MOVE_DOWN)
+                        .place(KeyEvent.VK_ESCAPE, PAUSE);
+            }
+
+            public static KeyAction get(final int keyEvent) {
+                final KeyAction ka = KEY_ACTIONS.get(keyEvent);
+                return ka == null? NULL: ka;
+            }
+
+            private static final class ChainedMap<K,V> extends HashMap<K,V> {
+                public final ChainedMap<K,V> place(K k, V v){ put(k,v); return this; }
+            }
+
         }
 
         /**
@@ -307,7 +377,7 @@ public final class Game {
         /**
          * A public constructor for a {@code GridPanel}.
          */
-        public GridPanel(){
+        private GridPanel(){
             setSize(PANEL_SIZE);
             setBackground(Color.DARK_GRAY);
             //Initialize fields.
@@ -317,16 +387,7 @@ public final class Game {
             addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    final int keyCode = e.getKeyCode();
-                    if((keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) && !currentDirection.isLeft())
-                        currentDirection = Direction.RIGHT;
-                    else if((keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) && !currentDirection.isRight())
-                        currentDirection = Direction.LEFT;
-                    else if((keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) && !currentDirection.isDown())
-                        currentDirection = Direction.UP;
-                    else if((keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) && !currentDirection.isUp())
-                        currentDirection = Direction.DOWN;
-                    else if(keyCode == KeyEvent.VK_ESCAPE) gameStatus = gameStatus.pause();
+                    KeyAction.get(e.getKeyCode()).perform();
                 }
             });
             //Start up game thread.
